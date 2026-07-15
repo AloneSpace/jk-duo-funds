@@ -41,17 +41,13 @@ const submit = async () => {
       <div class="space-y-6">
         <!-- Logo + heading -->
         <div class="space-y-3 text-center">
-          <div
-            class="mx-auto flex size-16 items-center justify-center rounded-[1.5rem] bg-emerald-600 text-xl font-bold text-white shadow-lg shadow-emerald-600/25"
-          >
-            DF
-          </div>
+          <img src="/logo.svg" alt="Duo Funds" class="mx-auto h-28 w-auto" />
 
           <div>
             <h1
               class="text-2xl font-semibold tracking-tight text-slate-900 dark:text-white"
             >
-              Welcome to Duo Funds
+              Welcome back
             </h1>
             <p
               class="mt-2 text-sm leading-6 text-slate-500 dark:text-slate-400"

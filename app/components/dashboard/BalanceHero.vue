@@ -36,6 +36,9 @@ defineEmits<{ filterClick: []; signOut: [] }>();
         <UIcon name="i-lucide-sliders-horizontal" class="size-4.5 text-white" />
       </button>
 
+      <!-- Logo (replace /logo.svg with your final logo file) -->
+      <img src="/logo.svg" alt="Duo Funds" class="size-9 drop-shadow-sm" />
+
       <div class="flex items-center gap-2">
         <span class="text-[11px] font-medium text-white/70">{{
           pairName
