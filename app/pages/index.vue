@@ -72,6 +72,10 @@ const filterOptions = [
 ];
 
 const setPreset = (value: "all" | "7d" | "30d" | "month") => {
+  if (value === "all") {
+    transactionStore.setCustomDateRange({ from: null, to: null });
+  }
+
   selectedPreset.value = value;
 };
 
@@ -180,7 +184,7 @@ const openCreateModal = () => {
         icon="i-lucide-upload"
         label="Upload slip"
         block
-        class="h-11 rounded-2xl bg-emerald-600 font-semibold shadow-sm shadow-emerald-600/25"
+        class="h-11 rounded-2xl bg-emerald-600 font-semibold shadow-sm shadow-emerald-600/25 text-white"
         @click="openCreateModal"
       />
 

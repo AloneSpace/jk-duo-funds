@@ -29,15 +29,8 @@ defineEmits<{ filterClick: []; signOut: [] }>();
 
     <!-- Top bar -->
     <div class="relative flex items-center justify-between">
-      <button
-        class="flex size-9 items-center justify-center rounded-full bg-white/15 transition active:bg-white/25"
-        @click="$emit('filterClick')"
-      >
-        <UIcon name="i-lucide-sliders-horizontal" class="size-4.5 text-white" />
-      </button>
-
       <!-- Logo (replace /logo.svg with your final logo file) -->
-      <img src="/logo.svg" alt="Duo Funds" class="size-9 drop-shadow-sm" />
+      <img src="/logo.svg" alt="Duo Funds" class="size-14 drop-shadow-sm" />
 
       <div class="flex items-center gap-2">
         <span class="text-[11px] font-medium text-white/70">{{
