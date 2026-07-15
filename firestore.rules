@@ -1,0 +1,35 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function userDoc() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid));
+    }
+
+    function isPairMember(pairId) {
+      return signedIn()
+        && exists(/databases/$(database)/documents/pairs/$(pairId))
+        && get(/databases/$(database)/documents/pairs/$(pairId)).data.memberIds.hasAny([request.auth.uid]);
+    }
+
+    match /users/{uid} {
+      allow read, write: if signedIn() && request.auth.uid == uid;
+    }
+
+    match /pairs/{pairId} {
+      allow read: if isPairMember(pairId);
+      allow create: if signedIn()
+        && request.resource.data.memberIds is list
+        && request.resource.data.memberIds.size() == 2
+        && request.resource.data.memberIds.hasAny([request.auth.uid]);
+      allow update, delete: if isPairMember(pairId);
+
+      match /transactions/{transactionId} {
+        allow read, write: if isPairMember(pairId);
+      }
+    }
+  }
+}
