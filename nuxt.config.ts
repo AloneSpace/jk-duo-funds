@@ -24,6 +24,12 @@ export default defineNuxtConfig({
     strict: true,
   },
 
+  nitro: {
+    firebase: {
+      gen: 2,
+    },
+  },
+
   runtimeConfig: {
     geminiApiKey: "",
     public: {
