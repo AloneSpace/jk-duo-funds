@@ -5,8 +5,28 @@ const router = useRouter();
 useHead({
   meta: [{ name: "viewport", content: "width=device-width, initial-scale=1" }],
   link: [
-    { rel: "icon", href: "/logo.svg", type: "image/svg+xml" },
-    { rel: "icon", href: "/favicon.ico" },
+    {
+      rel: "apple-touch-icon",
+      sizes: "180x180",
+      href: "favicon/apple-touch-icon.png",
+    },
+    { rel: "icon", href: "favicon/favicon.ico" },
+    {
+      rel: "icon",
+      type: "image/png",
+      sizes: "32x32",
+      href: "favicon/favicon-32x32.png",
+    },
+    {
+      rel: "icon",
+      type: "image/png",
+      sizes: "16x16",
+      href: "favicon/favicon-16x16.png",
+    },
+    {
+      rel: "manifest",
+      href: "favicon/site.webmanifest",
+    },
   ],
   htmlAttrs: {
     lang: "en",
@@ -23,7 +43,7 @@ onMounted(() => {
   watchAuthState();
 });
 
-const title = "Duo Funds";
+const title = "Duo Funds - A shared money app for two people";
 const description =
   "A mobile-first shared money app for two people, with slip analysis, transaction history, and pair-based summaries.";
 
