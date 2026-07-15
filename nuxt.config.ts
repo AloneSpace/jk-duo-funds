@@ -24,10 +24,12 @@ export default defineNuxtConfig({
     strict: true,
   },
 
+  future: {
+    compatibilityVersion: 4,
+  },
+
   nitro: {
-    firebase: {
-      gen: 2,
-    },
+    preset: "firebase-app-hosting",
   },
 
   runtimeConfig: {
