@@ -28,7 +28,8 @@ const localOpen = computed({
 });
 
 const slipUploadStore = useSlipUploadStore();
-const fileInput = ref<HTMLInputElement | null>(null);
+const fileInputCamera = ref<HTMLInputElement | null>(null);
+const fileInputGallery = ref<HTMLInputElement | null>(null);
 const selectedFile = ref<File | null>(null);
 const hasSlip = ref(false);
 const previewUrl = ref<string>("");
@@ -59,9 +60,17 @@ watch(
   },
 );
 
-const openFilePicker = () => {
-  fileInput.value?.click();
-};
+const openCamera = () => fileInputCamera.value?.click();
+const openGallery = () => fileInputGallery.value?.click();
+
+const sourcePickerItems = [
+  { label: "Take Photo", icon: "i-lucide-camera", onSelect: openCamera },
+  {
+    label: "Choose from Gallery",
+    icon: "i-lucide-images",
+    onSelect: openGallery,
+  },
+];
 
 const onFileChange = (event: Event) => {
   const input = event.target as HTMLInputElement;
@@ -150,50 +159,64 @@ const submit = () => {
             Transfer slip
           </p>
 
-          <button
-            type="button"
-            class="group relative w-full overflow-hidden rounded-2xl transition-all focus:outline-none"
-            :class="
-              hasSlip
-                ? 'ring-2 ring-primary/30'
-                : 'border-2 border-dashed border-accented bg-elevated hover:border-primary/40 hover:bg-accented'
-            "
-            @click="openFilePicker"
-          >
-            <!-- Preview -->
-            <img
-              v-if="hasSlip"
-              :src="previewUrl"
-              alt="Slip preview"
-              class="aspect-4/3 w-full object-contain"
-            />
-
-            <!-- Empty state -->
-            <div v-else class="flex flex-col items-center gap-2 py-8">
-              <div
-                class="flex size-12 items-center justify-center rounded-full bg-primary/10"
-              >
-                <UIcon name="i-lucide-image-plus" class="size-6 text-primary" />
-              </div>
-              <p class="text-sm font-medium text-default">Tap to upload slip</p>
-              <p class="text-xs text-muted">JPG, PNG, HEIC · max 10 MB</p>
-            </div>
-
-            <!-- Re-upload overlay when slip exists -->
-            <div
-              v-if="hasSlip"
-              class="absolute inset-0 flex items-end justify-end p-2 opacity-0 transition-opacity group-hover:opacity-100"
+          <UDropdownMenu :items="sourcePickerItems" :ui="{ content: 'w-52' }">
+            <button
+              type="button"
+              class="group relative w-full overflow-hidden rounded-2xl transition-all focus:outline-none"
+              :class="
+                hasSlip
+                  ? 'ring-2 ring-primary/30'
+                  : 'border-2 border-dashed border-accented bg-elevated hover:border-primary/40 hover:bg-accented'
+              "
             >
-              <span
-                class="rounded-full bg-black/60 px-3 py-1 text-xs font-medium text-white backdrop-blur-sm"
+              <!-- Preview -->
+              <img
+                v-if="hasSlip"
+                :src="previewUrl"
+                alt="Slip preview"
+                class="aspect-4/3 w-full object-contain"
+              />
+
+              <!-- Empty state -->
+              <div v-else class="flex flex-col items-center gap-2 py-8">
+                <div
+                  class="flex size-12 items-center justify-center rounded-full bg-primary/10"
+                >
+                  <UIcon
+                    name="i-lucide-image-plus"
+                    class="size-6 text-primary"
+                  />
+                </div>
+                <p class="text-sm font-medium text-default">
+                  Tap to upload slip
+                </p>
+                <p class="text-xs text-muted">JPG, PNG, HEIC · max 10 MB</p>
+              </div>
+
+              <!-- Re-upload overlay when slip exists -->
+              <div
+                v-if="hasSlip"
+                class="absolute inset-0 flex items-end justify-end p-2 opacity-0 transition-opacity group-hover:opacity-100"
               >
-                Change
-              </span>
-            </div>
-          </button>
+                <span
+                  class="rounded-full bg-black/60 px-3 py-1 text-xs font-medium text-white backdrop-blur-sm"
+                >
+                  Change
+                </span>
+              </div>
+            </button>
+          </UDropdownMenu>
 
           <input
-            ref="fileInput"
+            ref="fileInputCamera"
+            type="file"
+            accept="image/*"
+            capture="environment"
+            class="hidden"
+            @change="onFileChange"
+          />
+          <input
+            ref="fileInputGallery"
             type="file"
             accept="image/*"
             class="hidden"
